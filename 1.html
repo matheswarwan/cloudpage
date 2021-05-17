@@ -13,8 +13,18 @@
 
 <script>
   
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}  
+  
 function getDENames(myMessage) {
-    alert(myMessage);
+    //alert(myMessage);
+    var res = httpGet("https://pub.s7.exacttarget.com/prus4132iqz?Method=DESearch&SearchKey=PC_Churn_CustomerCareFile");
+    alert(res);
 }
 </script>
 
