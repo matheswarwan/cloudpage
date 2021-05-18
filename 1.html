@@ -13,23 +13,75 @@
 
 <script>
   
-function httpGet(theUrl)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
-}  
-  
-function getDENames(myMessage) {
-    //alert(myMessage);
-    var res = httpGet("https://pub.s7.exacttarget.com/prus4132iqz?Method=DESearch&SearchKey=PC_Churn_CustomerCareFile");
-    alert(res);
+
+var progBarCount = 0;
+
+async function getDEData(CustomerKey,i) { 
+     /* DE Query call  - starts */
+     var theUrl = "https://pub.s7.exacttarget.com/prus4132iqz?Method=DEQuery&SearchKey="+"frankieboymunizza@comcast.net"+"&ColumnName="+"PC_Email_Address"+"&CustomerKey=" + CustomerKey;
+     console.log("going to call " + theUrl);
+     var xhrDEQuery = new XMLHttpRequest();
+     xhrDEQuery.open("GET", theUrl, true);
+     xhrDEQuery.onload = function (e) {
+     if (xhrDEQuery.readyState === 4) {
+         if (xhrDEQuery.status === 200) {
+             progBarCount = i * 100 ;
+             console.log("ProgBarCount >>> "+ i*100 );
+     
+             document.getElementById("progress-bar").innerText= progBarCount + "%";
+             document.getElementById("progress-bar").style.width = progBarCount + "%";
+
+             var getDEQueryresp = JSON.parse(xhrDEQuery.response);
+             document.getElementById("d2").innerText += xhrDEQuery.responseText + " <br><br>";
+
+         } else {
+             console.error(xhrDEQuery.statusText);
+             alert( xhrDEQuery.statusText );
+           }
+         }
+       };
+       xhrDEQuery.onerror = function (e) {
+         console.error(xhrDEQuery.statusText);
+       };
+       xhrDEQuery.send(null);  
+     /* DE Query call  - ends */
 }
+
+async function getDENames(myMessage) {
+    var theUrl = "https://pub.s7.exacttarget.com/prus4132iqz?Method=DESearch&SearchKey="+"_CustomerCareFile";
+    var xhr = new XMLHttpRequest();
+     xhr.open("GET", theUrl, true);
+     xhr.onload = function (e) {
+       if (xhr.readyState === 4) {
+         if (xhr.status === 200) {
+           console.log("GetDENames Response --> " + xhr.responseText);
+           document.getElementById("d1").innerText = xhr.responseText;
+           var getDENamesresp = JSON.parse(xhr.response);
+           console.log("# of DEs to queries --> " +getDENamesresp.length);
+           //Write code for next call
+
+           for(var i=0;i<getDENamesresp.length;i++) {
+            console.log(getDENamesresp[i]["Name"]);
+            console.log(getDENamesresp[i]["CustomerKey"]);
+            console.log("% of move in progress bar " + ((100/getDENamesresp.length) * (i+1)));
+            getDEData(getDENamesresp[i]["CustomerKey"], ((i+1)/getDENamesresp.length) ); 
+           }
+         } else {
+           console.error(xhr.statusText);
+           alert( xhr.statusText );
+         }
+       }
+     };
+     xhr.onerror = function (e) {
+       console.error(xhr.statusText);
+     };
+     xhr.send(null);    
+ }
+  
 </script>
 
 
-<a href="javascript:getDENames('You clicked!')">Invoke JS Get call</a>
+<a href="javascript:getDENames()">Invoke JS Get call</a>
 
 <form action="%%=RequestParameter('https://pub.s7.exacttarget.com/slei2rwru01')=%%" method="post">
   Email Address 
