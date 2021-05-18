@@ -1,5 +1,9 @@
 <br>Test Data: mascitti@email.sc.edu
-<br>v0.6.4
+<br>v0.6.5
+<!-- 
+    TODO: if previous value is less than current bar value, don't update 
+    set the final value to 100 
+-->
 
 <input type="text" id="searchValue" maxlength="128" value="frankieboymunizza@comcast.net">
 <a href="javascript:getDENames()">Search this..</a>
@@ -103,10 +107,10 @@ async function getDEData(CustomerKey, DEName, i) {
              }
 
              //Set progress bar to 100 if all api calls are complete 
-             if (totalCount == currentCount)) {
+             /*if (totalCount == currentCount) {
                 document.getElementById("progress-bar").innerText=  "100%";
                 document.getElementById("progress-bar").style.width =  "100%";
-             }
+             }*/
 
          } else {
              console.error(xhrDEQuery.statusText);
