@@ -1,5 +1,5 @@
 <br>Test Data: mascitti@email.sc.edu
-<br>v0.7
+<br>v0.8<br>
 <!-- 
     TODO: if previous value is less than current bar value, don't update 
     set the final value to 100 
@@ -8,7 +8,7 @@
 <input type="text" id="searchValue" maxlength="128" value="frankieboymunizza@comcast.net">
 <a href="javascript:getDENames()">Search this..</a>
 
-<div class="container">
+<div class="container" id="container" style="visibility:hidden">
   <h2>Searching</h2>
   <div class="progress">
     <div class="progress-bar" role="progressbar" id="progress-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
@@ -116,6 +116,7 @@ async function getDEData(CustomerKey, DEName, i) {
 }
 
 async function getDENames() {
+    document.getElementById("container").style.visibility = "visible";
     var theUrl = "https://pub.s7.exacttarget.com/prus4132iqz?Method=DESearch&SearchKey="+"_CustomerCareFile";
     var xhr = new XMLHttpRequest();
      xhr.open("GET", theUrl, true);
