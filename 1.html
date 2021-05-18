@@ -1,5 +1,8 @@
 <br>Test Data: mascitti@email.sc.edu
-<br>v0.1
+<br>v0.2
+
+<input type="text" id="searchValue" maxlength="128" value="frankieboymunizza@comcast.net">
+<a href="javascript:getDENames()">Search this..</a>
 
 <div class="container">
   <h2>Progress Bar With Label</h2>
@@ -10,16 +13,65 @@
   </div>
 </div>
 
-<input type="text" id="searchValue" maxlength="128" value="frankieboymunizza@comcast.net">
-<a href="javascript:getDENames()">Search this..</a>
-
 <div id="d1"></div>
-<div id="d2"></div>
+<div id="table"></div>
+
+
 
 <script>
-  
 
 var progBarCount = 0;
+
+function convertJsonListToTable(list) {
+    var cols = [];
+        
+    for (var i = 0; i < list.length; i++) {
+        for (var k in list[i]) {
+            if (cols.indexOf(k) === -1) {
+                    
+                // Push all keys to the array
+                cols.push(k);
+            }
+        }
+    }
+        
+    // Create a table element
+    var table = document.createElement("table");
+        
+    // Create table row tr element of a table
+    var tr = table.insertRow(-1);
+        
+    for (var i = 0; i < cols.length; i++) {
+            
+        // Create the table header th element
+        var theader = document.createElement("th");
+        theader.innerHTML = cols[i];
+            
+        // Append columnName to the table row
+        tr.appendChild(theader);
+    }
+        
+    // Adding the data to the table
+    for (var i = 0; i < list.length; i++) {
+            
+        // Create a new row
+        trow = table.insertRow(-1);
+        for (var j = 0; j < cols.length; j++) {
+            var cell = trow.insertCell(-1);
+                
+            // Inserting the cell at particular place
+            cell.innerHTML = list[i][cols[j]];
+        }
+    }
+        
+    // Add the newely created table containing json data
+    var el = document.getElementById("table");
+    //el.innerHTML = "";
+    el.appendChild(table);
+    linebreak = document.createElement("br");
+    el.appendChild(linebreak);
+    el.appendChild(linebreak);
+}
 
 async function getDEData(CustomerKey, DEName, i) { 
     var searchValue = document.getElementById('searchValue').value;
@@ -38,9 +90,11 @@ async function getDEData(CustomerKey, DEName, i) {
              document.getElementById("progress-bar").style.width = progBarCount + "%";
 
              var getDEQueryresp = JSON.parse(xhrDEQuery.response);
-             if (getDEQueryresp != null) {
+             if (getDEQueryresp.length == 0) {
                 document.getElementById("d2").innerText += "<br> DE Name: " + DEName + "<br>";
-                document.getElementById("d2").innerText += xhrDEQuery.responseText + " <br><br>";
+                //document.getElementById("d2").innerText += xhrDEQuery.responseText + " <br><br>";
+                convertJsonListToTable(xhrDEQuery.responseText);
+
              }
 
          } else {
