@@ -97,7 +97,7 @@ async function getDEData(CustomerKey, DEName, i) {
                 var d2 = document.getElementById("table");
                 d2.appendChild(deNameElement);
                 //document.getElementById("d2").innerText += xhrDEQuery.responseText + " <br><br>";
-                convertJsonListToTable(xhrDEQuery.responseText);
+                convertJsonListToTable(JSON.parse(xhrDEQuery.response));
 
              }
 
