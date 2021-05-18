@@ -10,6 +10,11 @@
   </div>
 </div>
 
+<input type="text" id="searchValue" maxlength="128" value="frankieboymunizza@comcast.net">
+<a href="javascript:getDENames()">Search this..</a>
+
+<div id="d1"></div>
+<div id="d2"></div>
 
 <script>
   
@@ -17,8 +22,9 @@
 var progBarCount = 0;
 
 async function getDEData(CustomerKey,i) { 
+    var searchValue = document.getElementById('searchValue').value;
      /* DE Query call  - starts */
-     var theUrl = "https://pub.s7.exacttarget.com/prus4132iqz?Method=DEQuery&SearchKey="+"frankieboymunizza@comcast.net"+"&ColumnName="+"PC_Email_Address"+"&CustomerKey=" + CustomerKey;
+     var theUrl = "https://pub.s7.exacttarget.com/prus4132iqz?Method=DEQuery&SearchKey="+searchValue+"&ColumnName="+"PC_Email_Address"+"&CustomerKey=" + CustomerKey;
      console.log("going to call " + theUrl);
      var xhrDEQuery = new XMLHttpRequest();
      xhrDEQuery.open("GET", theUrl, true);
@@ -47,7 +53,7 @@ async function getDEData(CustomerKey,i) {
      /* DE Query call  - ends */
 }
 
-async function getDENames(myMessage) {
+async function getDENames() {
     var theUrl = "https://pub.s7.exacttarget.com/prus4132iqz?Method=DESearch&SearchKey="+"_CustomerCareFile";
     var xhr = new XMLHttpRequest();
      xhr.open("GET", theUrl, true);
@@ -80,14 +86,12 @@ async function getDENames(myMessage) {
   
 </script>
 
-
-<a href="javascript:getDENames()">Invoke JS Get call</a>
-
+<!--
 <form action="%%=RequestParameter('https://pub.s7.exacttarget.com/slei2rwru01')=%%" method="post">
   Email Address 
   <input type="text" name="colValueToFilter" maxlength="128" value="%%=RequestParameter('colValueToFilter')=%%">
   <input type="submit" value="Submit">
-</form>
+</form>-->
 <br>
 <br>
 
