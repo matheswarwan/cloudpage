@@ -103,7 +103,7 @@ async function getDEData(CustomerKey, DEName, i) {
              }
 
              //Set progress bar to 100 if all api calls are complete 
-             if (totalCount == currentCount) {
+             if (totalCount == (currentCount+1)) {
                 document.getElementById("progress-bar").innerText=  "100%";
                 document.getElementById("progress-bar").style.width =  "100%";
              }
@@ -128,7 +128,7 @@ async function getDENames() {
      xhr.onload = function (e) {
        if (xhr.readyState === 4) {
          if (xhr.status === 200) {
-           console.log("GetDENames Response --> " + xhr.responseText);
+           //console.log("GetDENames Response --> " + xhr.responseText);
            //document.getElementById("d1").innerText = xhr.responseText;
            var getDENamesresp = JSON.parse(xhr.response);
            console.log("# of DEs to queries --> " +getDENamesresp.length);
