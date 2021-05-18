@@ -20,7 +20,8 @@
 
 <script>
 
-var progBarCount = 0;
+var totalCount = 0;
+var currentCount = 0;
 
 function convertJsonListToTable(list) {
     var cols = [];
@@ -83,9 +84,7 @@ async function getDEData(CustomerKey, DEName, i) {
      xhrDEQuery.onload = function (e) {
      if (xhrDEQuery.readyState === 4) {
          if (xhrDEQuery.status === 200) {
-             progBarCount = i * 100 ; //TODO _dont need
-             console.log("ProgBarCount >>> "+ i*100 );
-     
+             
              document.getElementById("progress-bar").innerText= i + "%";
              document.getElementById("progress-bar").style.width = i + "%";
 
@@ -99,6 +98,12 @@ async function getDEData(CustomerKey, DEName, i) {
                 //document.getElementById("d2").innerText += xhrDEQuery.responseText + " <br><br>";
                 convertJsonListToTable(JSON.parse(xhrDEQuery.response));
 
+             }
+
+             //Set progress bar to 100 if all api calls are complete 
+             if (totalCount == currentCount) {
+                document.getElementById("progress-bar").innerText=  "100%";
+                document.getElementById("progress-bar").style.width =  "100%";
              }
 
          } else {
@@ -127,13 +132,16 @@ async function getDENames() {
            console.log("# of DEs to queries --> " +getDENamesresp.length);
            //Write code for next call
 
+            totalCount = getDENamesresp.length;
            for(var i=0;i<getDENamesresp.length;i++) {
-            console.log(getDENamesresp[i]["Name"]);
-            console.log(getDENamesresp[i]["CustomerKey"]);
+            //console.log(getDENamesresp[i]["Name"]);
+            //console.log(getDENamesresp[i]["CustomerKey"]);
             console.log("% of move in progress bar " + ((100/getDENamesresp.length) * (i+1)).toFixed(0)  );
+            currentCount = i;
             getDEData(  getDENamesresp[i]["CustomerKey"], 
                         getDENamesresp[i]["Name"], 
                         ((100/getDENamesresp.length) * (i+1)).toFixed(0) ); 
+            
            }
          } else {
            console.error(xhr.statusText);
