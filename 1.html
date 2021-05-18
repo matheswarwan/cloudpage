@@ -90,7 +90,7 @@ async function getDEData(CustomerKey, DEName, i) {
              document.getElementById("progress-bar").style.width = i + "%";
 
              var getDEQueryresp = JSON.parse(xhrDEQuery.response);
-             if (getDEQueryresp.length == 0) {
+             if (getDEQueryresp.length > 0) {
                 var deNameElement = document.createElement("div");
                 deNameElement.innerText = "DE Name: " + DEName ;
                 
