@@ -1,11 +1,11 @@
 <br>Test Data: mascitti@email.sc.edu
-<br>v0.2
+<br>v0.3
 
 <input type="text" id="searchValue" maxlength="128" value="frankieboymunizza@comcast.net">
 <a href="javascript:getDENames()">Search this..</a>
 
 <div class="container">
-  <h2>Progress Bar With Label</h2>
+  <h2>Searching</h2>
   <div class="progress">
     <div class="progress-bar" role="progressbar" id="progress-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
       0%
@@ -91,7 +91,11 @@ async function getDEData(CustomerKey, DEName, i) {
 
              var getDEQueryresp = JSON.parse(xhrDEQuery.response);
              if (getDEQueryresp.length == 0) {
-                document.getElementById("d2").innerText += "<br> DE Name: " + DEName + "<br>";
+                var deNameElement = document.createElement("div");
+                deNameElement.innerText = "DE Name: " + DEName ;
+                
+                var d2 = document.getElementById("table");
+                d2.appendChild(deNameElement);
                 //document.getElementById("d2").innerText += xhrDEQuery.responseText + " <br><br>";
                 convertJsonListToTable(xhrDEQuery.responseText);
 
