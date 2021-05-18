@@ -1,5 +1,5 @@
 <br>Test Data: mascitti@email.sc.edu
-<br>v0.6.5
+<br>v0.6.6
 <!-- 
     TODO: if previous value is less than current bar value, don't update 
     set the final value to 100 
@@ -107,10 +107,10 @@ async function getDEData(CustomerKey, DEName, i) {
              }
 
              //Set progress bar to 100 if all api calls are complete 
-             /*if (totalCount == currentCount) {
+             if (totalCount == currentCount) {
                 document.getElementById("progress-bar").innerText=  "100%";
                 document.getElementById("progress-bar").style.width =  "100%";
-             }*/
+             }
 
          } else {
              console.error(xhrDEQuery.statusText);
@@ -138,7 +138,7 @@ async function getDENames() {
            console.log("# of DEs to queries --> " +getDENamesresp.length);
            //Write code for next call
 
-            totalCount = getDENamesresp.length;
+            totalCount = getDENamesresp.length-1;
            for(var i=0;i<getDENamesresp.length;i++) {
             //console.log(getDENamesresp[i]["Name"]);
             //console.log(getDENamesresp[i]["CustomerKey"]);
