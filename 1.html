@@ -1,5 +1,5 @@
 <br>Test Data: mascitti@email.sc.edu
-<br>
+<br>v0.1
 
 <div class="container">
   <h2>Progress Bar With Label</h2>
@@ -72,10 +72,10 @@ async function getDENames() {
            for(var i=0;i<getDENamesresp.length;i++) {
             console.log(getDENamesresp[i]["Name"]);
             console.log(getDENamesresp[i]["CustomerKey"]);
-            console.log("% of move in progress bar " + ((100/getDENamesresp.length) * (i+1)));
+            console.log("% of move in progress bar " + ((100/getDENamesresp.length) * (i+1)).toFixed(0)  );
             getDEData(  getDENamesresp[i]["CustomerKey"], 
                         getDENamesresp[i]["Name"], 
-                        ((i+1)/getDENamesresp.length) ); 
+                        ((i+1)/getDENamesresp.length).toFixed(0) ); 
            }
          } else {
            console.error(xhr.statusText);
