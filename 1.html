@@ -1,5 +1,5 @@
 <br>Test Data: mascitti@email.sc.edu
-<br>v0.3
+<br>v0.4
 
 <input type="text" id="searchValue" maxlength="128" value="frankieboymunizza@comcast.net">
 <a href="javascript:getDENames()">Search this..</a>
@@ -83,11 +83,11 @@ async function getDEData(CustomerKey, DEName, i) {
      xhrDEQuery.onload = function (e) {
      if (xhrDEQuery.readyState === 4) {
          if (xhrDEQuery.status === 200) {
-             progBarCount = i * 100 ;
+             progBarCount = i * 100 ; //TODO _dont need
              console.log("ProgBarCount >>> "+ i*100 );
      
-             document.getElementById("progress-bar").innerText= progBarCount + "%";
-             document.getElementById("progress-bar").style.width = progBarCount + "%";
+             document.getElementById("progress-bar").innerText= i + "%";
+             document.getElementById("progress-bar").style.width = i + "%";
 
              var getDEQueryresp = JSON.parse(xhrDEQuery.response);
              if (getDEQueryresp.length == 0) {
@@ -133,7 +133,7 @@ async function getDENames() {
             console.log("% of move in progress bar " + ((100/getDENamesresp.length) * (i+1)).toFixed(0)  );
             getDEData(  getDENamesresp[i]["CustomerKey"], 
                         getDENamesresp[i]["Name"], 
-                        ((i+1)/getDENamesresp.length).toFixed(0) ); 
+                        ((100/getDENamesresp.length) * (i+1)).toFixed(0) ); 
            }
          } else {
            console.error(xhr.statusText);
