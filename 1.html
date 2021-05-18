@@ -1,5 +1,5 @@
 <br>Test Data: mascitti@email.sc.edu
-<br>v0.6
+<br>v0.6.1
 
 <input type="text" id="searchValue" maxlength="128" value="frankieboymunizza@comcast.net">
 <a href="javascript:getDENames()">Search this..</a>
@@ -75,10 +75,11 @@ function convertJsonListToTable(list) {
 }
 
 async function getDEData(CustomerKey, DEName, i) { 
+    console.log("Total Count " + totalCount + " : currentCount " + currentCount + " : i value " + i);
+
     var searchValue = document.getElementById('searchValue').value;
      /* DE Query call  - starts */
      var theUrl = "https://pub.s7.exacttarget.com/prus4132iqz?Method=DEQuery&SearchKey="+searchValue+"&ColumnName="+"PC_Email_Address"+"&CustomerKey=" + CustomerKey;
-     console.log("going to call " + theUrl);
      var xhrDEQuery = new XMLHttpRequest();
      xhrDEQuery.open("GET", theUrl, true);
      xhrDEQuery.onload = function (e) {
@@ -136,7 +137,7 @@ async function getDENames() {
            for(var i=0;i<getDENamesresp.length;i++) {
             //console.log(getDENamesresp[i]["Name"]);
             //console.log(getDENamesresp[i]["CustomerKey"]);
-            console.log("% of move in progress bar " + ((100/getDENamesresp.length) * (i+1)).toFixed(0)  );
+            //console.log("% of move in progress bar " + ((100/getDENamesresp.length) * (i+1)).toFixed(0)  );
             currentCount = i;
             getDEData(  getDENamesresp[i]["CustomerKey"], 
                         getDENamesresp[i]["Name"], 
