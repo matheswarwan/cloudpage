@@ -21,7 +21,7 @@
 
 var progBarCount = 0;
 
-async function getDEData(CustomerKey,i) { 
+async function getDEData(CustomerKey, DEName, i) { 
     var searchValue = document.getElementById('searchValue').value;
      /* DE Query call  - starts */
      var theUrl = "https://pub.s7.exacttarget.com/prus4132iqz?Method=DEQuery&SearchKey="+searchValue+"&ColumnName="+"PC_Email_Address"+"&CustomerKey=" + CustomerKey;
@@ -38,7 +38,10 @@ async function getDEData(CustomerKey,i) {
              document.getElementById("progress-bar").style.width = progBarCount + "%";
 
              var getDEQueryresp = JSON.parse(xhrDEQuery.response);
-             document.getElementById("d2").innerText += xhrDEQuery.responseText + " <br><br>";
+             if (getDEQueryresp != null) {
+                document.getElementById("d2").innerText += "<br> DE Name: " + DEName + "<br>";
+                document.getElementById("d2").innerText += xhrDEQuery.responseText + " <br><br>";
+             }
 
          } else {
              console.error(xhrDEQuery.statusText);
@@ -61,7 +64,7 @@ async function getDENames() {
        if (xhr.readyState === 4) {
          if (xhr.status === 200) {
            console.log("GetDENames Response --> " + xhr.responseText);
-           document.getElementById("d1").innerText = xhr.responseText;
+           //document.getElementById("d1").innerText = xhr.responseText;
            var getDENamesresp = JSON.parse(xhr.response);
            console.log("# of DEs to queries --> " +getDENamesresp.length);
            //Write code for next call
@@ -70,7 +73,9 @@ async function getDENames() {
             console.log(getDENamesresp[i]["Name"]);
             console.log(getDENamesresp[i]["CustomerKey"]);
             console.log("% of move in progress bar " + ((100/getDENamesresp.length) * (i+1)));
-            getDEData(getDENamesresp[i]["CustomerKey"], ((i+1)/getDENamesresp.length) ); 
+            getDEData(  getDENamesresp[i]["CustomerKey"], 
+                        getDENamesresp[i]["Name"], 
+                        ((i+1)/getDENamesresp.length) ); 
            }
          } else {
            console.error(xhr.statusText);
