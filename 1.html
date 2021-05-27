@@ -1,5 +1,5 @@
 <br>Test Data: mascitti@email.sc.edu
-<br>v0.8<br>
+<br>v0.9<br>
 <!-- 
     TODO: if previous value is less than current bar value, don't update 
     set the final value to 100 
@@ -23,9 +23,20 @@
 
 
 <script>
+//Export functionality
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
+    } );
+} );
 
-
-function convertJsonListToTable(list) {
+function convertJsonListToTable(list, i) {
     var cols = [];
         
     for (var i = 0; i < list.length; i++) {
@@ -41,6 +52,7 @@ function convertJsonListToTable(list) {
     // Create a table element
     var table = document.createElement("table");
     table.border = 1;
+    table.id = "table" + i;
         
     // Create table row tr element of a table
     var tr = table.insertRow(-1);
@@ -98,7 +110,7 @@ async function getDEData(CustomerKey, DEName, i) {
                 var d2 = document.getElementById("table");
                 d2.appendChild(deNameElement);
                 //document.getElementById("d2").innerText += xhrDEQuery.responseText + " <br><br>";
-                convertJsonListToTable(JSON.parse(xhrDEQuery.response));
+                convertJsonListToTable(JSON.parse(xhrDEQuery.response), i);
 
              }
 
